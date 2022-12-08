@@ -21,6 +21,11 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.nav-links li:hover {
+  color: #d60d82;
+}
+
 .nav-links_brands {
   display: flex;
   flex-direction: row;
