@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import MainLayout from "./layouts/main/MainLayout";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <MainLayout>
+      <div
+        style={{
+          backgroundImage: "url(wall_poro.jpeg)",
+          height: 400,
+          marginTop: 16,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          backgroundSize: "center",
+          backgroundPosition: 'center',
+          objectFit: "cover",
+        }}
+      >
+        <div
+          style={{
+            color: "white",
+            marginLeft: 20,
+
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          
+        </div>
+      </div>
+      <div style={{ padding: "16px 0" }}>
+        <div className="cards">
+          {[1,2,3,4,6,5].map((e, i) => {
+            return (
+              <div className="card" key={i}>
+                <img src="poro.jpeg" alt="image_alt" className="card_image" />
+                <div className="btn">Touch</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </MainLayout>
   );
 }
 

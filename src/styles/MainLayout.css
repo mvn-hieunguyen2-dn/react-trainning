@@ -1,0 +1,24 @@
+.main-layout_wrapper_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  /* background: lime */
+}
+.main-layout_container {
+  position: relative;
+  height: 100%;
+}
+.main-layout_content {
+  width: auto;
+  padding: 0 4%;
+}
+
+@media only screen and (min-width: 700px){
+  .main-layout_content {
+    width: auto;
+    padding: 0 4%;
+  }
+}
