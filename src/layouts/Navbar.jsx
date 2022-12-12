@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/Navbar.css";
+import "../styles/Navbar.css";
 import { Twitter, Facebook, Instagram } from "@mui/icons-material";
 
 const Navbar = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
                 fontSize: 18,
               }}
             >
-              ICCHI
+              REACT JS
             </span>
           </div>
           <ul className="nav-links">
