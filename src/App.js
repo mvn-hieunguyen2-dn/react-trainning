@@ -1,70 +1,162 @@
-import React, { useState } from "react";
-import Product from "./components/Product";
 import MainLayout from "./layouts/MainLayout";
+import React, { Component } from "react";
 
-function App() {
-  const [products, setProducts] = useState([
-    {
-      uuid: 1,
-      name: "Poro 1",
-      price: 20,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-    {
-      uuid: 2,
-      name: "Poro 2",
-      price: 40,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-    {
-      uuid: 3,
-      name: "Poro 3",
-      price: 70,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-    {
-      uuid: 4,
-      name: "Poro 4",
-      price: 10,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-  ]);
+class Circle extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isStart: true,
+      info: this.props.info,
+      counter: this.props.info.countNum,
+    };
+  }
 
-  const setProduct = (uuid) => {
-    let temProducts = [...products];
-    temProducts.forEach((product, i) => {
-      console.log(uuid, product.uuid);
-      if (product.uuid === uuid) {
-        let temProduct = {
-          ...product,
-          colorBtn: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-        };
-        temProducts[i] = temProduct;
-      }
-    });
-    setProducts([...temProducts]);
-  };
+  componentDidMount() {
+    this.interval = this.state.isStart
+      ? setInterval(
+          () => this.setState({ counter: this.state.counter - 1 }),
+          1000
+        )
+      : "";
+  }
 
-  return (
-    <MainLayout>
-      <div style={{ padding: "16px 0" }}>
-        <p style={{ fontWeight: "bold", fontSize: 24 }}>Products latest</p>
-        <div className="cards">
-          {products.map((info, i) => {
-            return (
-              <React.Fragment key={i}>
-                <Product info={info} setProduct={setProduct} />
-              </React.Fragment>
-            );
-          })}
-        </div>
+  componentDidUpdate() {
+    console.log(`Circle ${this.state.info.id} working....`);
+    if (this.state.isStart === false) {
+      clearInterval(this.interval);
+      this.interval = 0;
+      return;
+    }
+    if (this.interval === 0 && this.state.isStart) {
+      this.interval = setInterval(
+        () => this.setState({ counter: this.state.counter - 1 }),
+        1000
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+    console.log(`Circle ${this.state.info.id} destroy....`);
+  }
+
+  setStart() {
+    this.setState({ isStart: !this.state.isStart });
+  }
+
+  render() {
+    return (
+      <div
+        onClick={() => this.setStart()}
+        style={{
+          width: this.state.info.size,
+          height: this.state.info.size,
+          border: "1px solid black",
+          borderRadius: "50%",
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          backgroundColor: this.state.isStart ? "green" : "red",
+        }}
+      >
+        <p>{this.state.isStart ? "Start" : "Stop"}</p>
+        {this.state.counter}
       </div>
-    </MainLayout>
-  );
+    );
+  }
+}
+
+class Circles extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      children: this.props.children,
+    };
+  }
+  render() {
+    return (
+      <div style={{ display: "flex", justifyContent: "space-between", height: '100%' }}>
+        {this.state.children.map((children, i) => {
+          return (
+            <div key={i}>
+              <Circle info={children} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+}
+export class Parent extends Component {
+  state = {
+    children: [
+      {
+        id: 1,
+        name: "Child 1",
+        countNum: 10,
+        isStart: false,
+        size: 100,
+      },
+      {
+        id: 2,
+        name: "Child 1",
+        countNum: 10,
+        isStart: false,
+        size: 100,
+      },
+      {
+        id: 3,
+        name: "Child 1",
+        countNum: 10,
+        isStart: false,
+        size: 100,
+      },
+    ],
+    page: "Home",
+  };
+  // eslint-disable-next-line no-useless-constructor
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div
+        style={{
+          padding: 10,
+        }}
+      >
+        <button onClick={() => this.setState({ page: "Home" })}>
+          Switch Home
+        </button>
+        <button onClick={() => this.setState({ page: "About" })}>
+          Switch About
+        </button>
+        {this.state.page === "Home" && <Circles {...this.state} />}
+      </div>
+    );
+  }
+}
+
+export class Child extends Component {
+  // eslint-disable-next-line no-useless-constructor
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div></div>;
+  }
+}
+
+class App extends Component {
+  render() {
+    return (
+      <MainLayout>
+        <Parent />
+      </MainLayout>
+    );
+  }
 }
 
 export default App;
