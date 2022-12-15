@@ -5,7 +5,7 @@ import Form from "./components/Form";
 
 export class Parent extends Component {
   state = {
-    children: [
+    circles: [
       {
         id: 1,
         name: "Child 1",

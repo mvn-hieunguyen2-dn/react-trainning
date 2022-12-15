@@ -5,16 +5,16 @@ export class Circles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      children: this.props.children,
+      circles: this.props.circles,
     };
   }
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "space-between", height: '100%' }}>
-        {this.state.children.map((children, i) => {
+        {this.state.circles.map((circle, i) => {
           return (
             <div key={i}>
-              <Circle info={children} />
+              <Circle info={circle} />
             </div>
           );
         })}

@@ -6,6 +6,7 @@ export class Circle extends Component {
     this.state = {
       isStart: true,
       info: this.props.info,
+      size: this.props.size,
       counter: this.props.info.countNum,
     };
   }
@@ -48,8 +49,8 @@ export class Circle extends Component {
       <div
         onClick={() => this.setStart()}
         style={{
-          width: this.state.info.size,
-          height: this.state.info.size,
+          width: this.state.info.size - this.state.counter,
+          height: this.state.info.size - this.state.counter,
           border: "1px solid black",
           borderRadius: "50%",
           textAlign: "center",
