@@ -121,7 +121,6 @@ class InputField extends Component {
             placeholder={placeholder}
             onChange={onChange}
             checked={defaultChecked ? true: false}
-            defaultChecked={defaultChecked}
           />
         );
       case "radio":
@@ -133,7 +132,6 @@ class InputField extends Component {
             placeholder={placeholder}
             onChange={onChange}
             checked={defaultChecked ? true: false}
-            defaultChecked={defaultChecked}
           />
         );
       case "textarea":

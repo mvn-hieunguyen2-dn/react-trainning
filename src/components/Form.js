@@ -17,6 +17,7 @@ class Form extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.deletedUser = this.deletedUser.bind(this);
   }
 
   handleSubmit(e) {
@@ -49,6 +50,14 @@ class Form extends Component {
         [key]: isCheckbox ? (checked ? 1 : 0) : value,
       },
     }));
+  }
+
+  deletedUser(user){
+    let confirm = window.confirm('Are you sure?')
+    if (confirm) this.setState((prev) => ({
+      ...prev,
+      users: this.state.users.filter((e) => e.email !== user.email)
+    }))
   }
 
   render() {
@@ -149,7 +158,7 @@ class Form extends Component {
           />
           <button style={{ margin: "20px 0" }}>Add User</button>
         </form>
-        <table style={{margin: '0 10px'}}>
+        <table style={{margin: '0 10px', width: '100%'}}>
           <thead>
             <tr>
               <th>Email</th>
@@ -158,6 +167,7 @@ class Form extends Component {
               <th>Remember me</th>
               <th>Description</th>
               <th>Country</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -174,10 +184,16 @@ class Form extends Component {
                 <tr key={i}>
                   <td>{email}</td>
                   <td>{password}</td>
-                  <td>{gender}</td>
+                  <td>{gender === 0 ? 'Male' : 'Female'}</td>
                   <td>{rememberMe}</td>
                   <td>{description}</td>
                   <td>{country}</td>
+                  <td>
+                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                    <a href="#" onClick={() => {
+                      this.deletedUser(user)
+                    }}>Delete</a>
+                  </td>
                 </tr>
               );
             })}
