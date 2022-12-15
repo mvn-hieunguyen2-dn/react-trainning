@@ -31,10 +31,6 @@ export class Parent extends Component {
     page: "Home",
     user: []
   };
-  // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -58,17 +54,6 @@ export class Parent extends Component {
     );
   }
 }
-
-export class Child extends Component {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return <div></div>;
-  }
-}
-
 class App extends Component {
   render() {
     return (
