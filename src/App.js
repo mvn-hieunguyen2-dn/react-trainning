@@ -1,70 +1,67 @@
-import React, { useState } from "react";
-import Product from "./components/Product";
 import MainLayout from "./layouts/MainLayout";
+import React, { Component } from "react";
+import { Circles } from "./components/Circles";
+import Form from "./components/Form";
 
-function App() {
-  const [products, setProducts] = useState([
-    {
-      uuid: 1,
-      name: "Poro 1",
-      price: 20,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-    {
-      uuid: 2,
-      name: "Poro 2",
-      price: 40,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-    {
-      uuid: 3,
-      name: "Poro 3",
-      price: 70,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-    {
-      uuid: 4,
-      name: "Poro 4",
-      price: 10,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-      colorBtn: "#202329",
-    },
-  ]);
-
-  const setProduct = (uuid) => {
-    let temProducts = [...products];
-    temProducts.forEach((product, i) => {
-      console.log(uuid, product.uuid);
-      if (product.uuid === uuid) {
-        let temProduct = {
-          ...product,
-          colorBtn: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-        };
-        temProducts[i] = temProduct;
-      }
-    });
-    setProducts([...temProducts]);
+export class Parent extends Component {
+  state = {
+    circles: [
+      {
+        id: 1,
+        name: "Child 1",
+        countNum: 10,
+        isStart: false,
+        size: 100,
+      },
+      {
+        id: 2,
+        name: "Child 1",
+        countNum: 10,
+        isStart: false,
+        size: 100,
+      },
+      {
+        id: 3,
+        name: "Child 1",
+        countNum: 10,
+        isStart: false,
+        size: 100,
+      },
+    ],
+    page: "Home",
+    user: []
   };
 
-  return (
-    <MainLayout>
-      <div style={{ padding: "16px 0" }}>
-        <p style={{ fontWeight: "bold", fontSize: 24 }}>Products latest</p>
-        <div className="cards">
-          {products.map((info, i) => {
-            return (
-              <React.Fragment key={i}>
-                <Product info={info} setProduct={setProduct} />
-              </React.Fragment>
-            );
-          })}
-        </div>
+  render() {
+    return (
+      <div
+        style={{
+          padding: 10,
+        }}
+      >
+        <button onClick={() => this.setState({ page: "Home" })}>
+          Switch Home
+        </button>
+        <button onClick={() => this.setState({ page: "About" })}>
+          Switch About
+        </button>
+        <button onClick={() => this.setState({ page: "Form" })}>
+          Switch Form
+        </button>
+        {this.state.page === "Home" && <Circles {...this.state} />}
+        {this.state.page === "Form" && <Form setData={this.setState} />}
       </div>
-    </MainLayout>
-  );
+    );
+  }
+}
+class App extends Component {
+  render() {
+    return (
+      <MainLayout>
+        <Parent />
+      </MainLayout>
+    );
+  }
 }
 
 export default App;
