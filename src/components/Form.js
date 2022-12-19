@@ -52,18 +52,19 @@ class Form extends Component {
     }));
   }
 
-  deletedUser(user){
-    let confirm = window.confirm('Are you sure?')
-    if (confirm) this.setState((prev) => ({
-      ...prev,
-      users: this.state.users.filter((e) => e.email !== user.email)
-    }))
+  deletedUser(user) {
+    let confirm = window.confirm("Are you sure?");
+    if (confirm)
+      this.setState((prev) => ({
+        ...prev,
+        users: this.state.users.filter((e) => e.email !== user.email),
+      }));
   }
 
   render() {
     const { form, users } = this.state;
     return (
-      <div style={{ display: "flex", margin: '20px 0'}}>
+      <div style={{ display: "flex", margin: "20px 0" }}>
         <form
           ref={this.form_ref}
           onSubmit={this.handleSubmit}
@@ -71,9 +72,9 @@ class Form extends Component {
             display: "flex",
             flexDirection: "column",
             width: "30%",
-            background: 'black',
-            padding: '5px 10px',
-            color: 'white'
+            background: "black",
+            padding: "5px 10px",
+            color: "white",
           }}
         >
           <Field
@@ -144,12 +145,12 @@ class Form extends Component {
             options={[
               {
                 id: 1,
-                value: 'vn',
+                value: "vn",
                 name: "Viet Nam",
               },
               {
                 id: 2,
-                value: 'cn',
+                value: "cn",
                 name: "Chinese",
               },
             ]}
@@ -158,7 +159,7 @@ class Form extends Component {
           />
           <button style={{ margin: "20px 0" }}>Add User</button>
         </form>
-        <table style={{margin: '0 10px', width: '100%'}}>
+        <table style={{ margin: "0 10px", width: "100%" }}>
           <thead>
             <tr>
               <th>Email</th>
@@ -172,29 +173,44 @@ class Form extends Component {
           </thead>
           <tbody>
             {users.map((user, i) => {
-              const {
-                email,
-                password,
-                gender,
-                description,
-                country,
-                rememberMe,
-              } = user;
               return (
-                <tr key={i}>
-                  <td>{email}</td>
-                  <td>{password}</td>
-                  <td>{gender === 0 ? 'Male' : 'Female'}</td>
-                  <td>{rememberMe}</td>
-                  <td>{description}</td>
-                  <td>{country}</td>
-                  <td>
-                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <a href="#" onClick={() => {
-                      this.deletedUser(user)
-                    }}>Delete</a>
-                  </td>
-                </tr>
+                <Item
+                  key={i}
+                  deletedUser={this.deletedUser}
+                  {...user}
+                  render={() => {
+                    const {
+                      email,
+                      password,
+                      gender,
+                      description,
+                      country,
+                      rememberMe,
+                    } = user;
+                    return (
+                      <tr key={i}>
+                        <td>{email}</td>
+                        <td>{password}</td>
+                        <td>{gender === 0 ? "Male" : "Female"}</td>
+                        <td>{rememberMe}</td>
+                        <td>{description}</td>
+                        <td>{country}</td>
+                        <td>
+                          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                          <a
+                            href="#"
+                            onClick={() => {
+                              this.deletedUser(user);
+                            }}
+                          >
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  }}
+                  
+                />
               );
             })}
           </tbody>
@@ -205,3 +221,13 @@ class Form extends Component {
 }
 
 export default Form;
+
+class Item extends React.Component {
+  // eslint-disable-next-line no-useless-constructor
+  constructor(props) {
+    super(props);
+  }
+  render(){
+    return this.props.render()
+  }
+}
